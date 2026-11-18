@@ -1,0 +1,25 @@
+STUDYPLANNER 1.0 — INSTRUCCIONES
+
+ARCHIVOS
+- index.html: estructura de pantallas
+- styles.css: diseño responsive
+- script.js: funciones y almacenamiento local
+- manifest.json: configuración de instalación PWA
+- service-worker.js: caché básica para uso sin conexión
+- icons/: iconos de la aplicación
+
+PROBAR
+1. Descomprime la carpeta StudyPlanner.
+2. Abre index.html en un editor o servidor de vista previa para probar la interfaz.
+3. Los datos se guardan en el navegador mediante localStorage.
+
+INSTALAR COMO PWA
+Para instalarla como PWA, primero publícala en un alojamiento HTTPS (por ejemplo GitHub Pages).
+Abrir index.html directamente como archivo local no permite instalar PWA ni activar service worker.
+En Android, abre la URL HTTPS publicada en Chrome y usa el menú ⋮ > Instalar aplicación o Añadir a pantalla de inicio.
+
+NOTAS
+- La primera versión no requiere registro ni servicios de pago.
+- Los datos quedan guardados en cada dispositivo/navegador; no se sincronizan automáticamente entre dispositivos.
+- Fuentes externas (Google Fonts) pueden necesitar conexión. Las funciones principales de la app se almacenan en caché al visitar la web publicada.
+- Antes de publicar, prueba las funciones y revisa la política de caché si haces cambios futuros (actualiza CACHE_NAME en service-worker.js).

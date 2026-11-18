@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#172c49">
+  <meta name="description" content="StudyPlanner: organiza tus tareas, exámenes y proyectos académicos.">
+  <title>StudyPlanner · Tu espacio académico</title>
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" href="icons/icon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar" id="sidebar">
+      <a class="brand" href="#" aria-label="StudyPlanner inicio" data-page-link="inicio">
+        <span class="brand-mark">✦</span>
+        <span><strong>StudyPlanner</strong><small>ESPACIO ACADÉMICO</small></span>
+      </a>
+      <div class="side-label">MENÚ PRINCIPAL</div>
+      <nav class="side-nav" aria-label="Navegación principal">
+        <button class="nav-link active" data-page="inicio"><span>⌂</span> Inicio</button>
+        <button class="nav-link" data-page="tareas"><span>✓</span> Mis tareas <b class="nav-count" id="taskNavCount">0</b></button>
+        <button class="nav-link" data-page="calendario"><span>▦</span> Calendario</button>
+        <button class="nav-link" data-page="examenes"><span>▤</span> Exámenes</button>
+        <button class="nav-link" data-page="proyectos"><span>◇</span> Proyectos</button>
+        <button class="nav-link" data-page="progreso"><span>↗</span> Mi progreso</button>
+        <button class="nav-link" data-page="enfoque"><span>◷</span> Modo enfoque</button>
+      </nav>
+      <div class="sidebar-bottom">
+        <div class="quote-card">
+          <span class="quote-spark">✧</span>
+          <p>Pequeños pasos cada día crean grandes resultados.</p>
+          <small>UN DÍA A LA VEZ</small>
+        </div>
+        <button class="nav-link" data-page="ajustes"><span>⚙</span> Configuración</button>
+        <div class="sidebar-user">
+          <div class="avatar" id="sideAvatar">E</div>
+          <div><strong id="sideName">Estudiante</strong><small>Mi espacio personal</small></div>
+        </div>
+      </div>
+    </aside>
+
+    <main class="main-area">
+      <header class="topbar">
+        <button class="mobile-menu icon-button" id="menuToggle" aria-label="Abrir menú">☰</button>
+        <div class="breadcrumb"><span>Mi espacio</span><span class="crumb-dot">/</span><strong id="pageCrumb">Inicio</strong></div>
+        <div class="top-actions">
+          <span class="today-label" id="todayLabel"></span>
+          <button class="icon-button" id="themeToggle" aria-label="Cambiar tema" title="Cambiar tema">☾</button>
+          <div class="top-avatar" id="topAvatar">E</div>
+        </div>
+      </header>
+
+      <section class="page active" id="page-inicio">
+        <div class="welcome-banner">
+          <div class="welcome-copy">
+            <span class="eyebrow light">TU ESPACIO PARA CRECER</span>
+            <h1 id="welcomeTitle">¡Hola, estudiante!</h1>
+            <p>Organiza tu tiempo, enfócate en tus metas y avanza a tu propio ritmo.</p>
+            <button class="button button-white" data-page="tareas">Organizar mis tareas <span>→</span></button>
+          </div>
+          <div class="banner-art" aria-hidden="true">
+            <div class="art-circle"></div><div class="art-card"><span>✦</span><strong>Un plan claro</strong><small>Un mejor comienzo</small><div class="art-lines"><i></i><i></i><i></i></div></div>
+            <div class="art-star star-one">✧</div><div class="art-star star-two">✦</div>
+          </div>
+        </div>
+
+        <div class="section-heading">
+          <div><span class="eyebrow">RESUMEN DE HOY</span><h2>Tu organización académica</h2><p>Una mirada rápida a tus actividades.</p></div>
+          <button class="button button-primary" data-action="add-task">＋ Nueva tarea</button>
+        </div>
+
+        <div class="stats-grid">
+          <article class="stat-card"><div class="stat-icon blue">✓</div><div><span>Tareas pendientes</span><strong id="statPending">0</strong><small>Por completar</small></div></article>
+          <article class="stat-card"><div class="stat-icon violet">▤</div><div><span>Exámenes próximos</span><strong id="statExams">0</strong><small>Registrados</small></div></article>
+          <article class="stat-card"><div class="stat-icon teal">◇</div><div><span>Proyectos activos</span><strong id="statProjects">0</strong><small>En desarrollo</small></div></article>
+          <article class="stat-card"><div class="stat-icon amber">↗</div><div><span>Tareas completadas</span><strong id="statDone">0</strong><small>¡Buen trabajo!</small></div></article>
+        </div>
+
+        <div class="dashboard-grid">
+          <article class="panel">
+            <div class="panel-heading"><div><h3>Próximas tareas</h3><p>Lo que tienes por delante</p></div><button class="text-button" data-page="tareas">Ver todas →</button></div>
+            <div id="homeTaskList" class="compact-list"><div class="empty-state">Todavía no tienes tareas. ¡Agrega la primera!</div></div>
+          </article>
+          <article class="panel progress-panel">
+            <div class="panel-heading"><div><h3>Tu progreso</h3><p>Avance de tus tareas</p></div><span class="mini-badge">GENERAL</span></div>
+            <div class="progress-ring" id="progressRing"><div><strong id="progressPercent">0%</strong><small>completado</small></div></div>
+            <p class="center muted" id="progressMessage">Cada tarea completada cuenta.</p>
+            <button class="button button-soft full-width" data-page="progreso">Ver mi progreso</button>
+          </article>
+        </div>
+      </section>
+
+      <section class="page" id="page-tareas">
+        <div class="section-heading page-heading"><div><span class="eyebrow">ORGANIZA Y AVANZA</span><h1>Mis tareas</h1><p>Registra tus actividades y lleva el control de tus entregas.</p></div><button class="button button-primary" data-action="add-task">＋ Agregar tarea</button></div>
+        <div class="toolbar"><div class="filter-tabs" id="taskFilters"><button class="filter-tab active" data-filter="todas">Todas</button><button class="filter-tab" data-filter="pendientes">Pendientes</button><button class="filter-tab" data-filter="completadas">Completadas</button></div><span class="muted small" id="taskCountLabel">0 actividades</span></div>
+        <div class="panel"><div id="taskList" class="task-list"><div class="empty-state">Aún no hay tareas. Agrega una para comenzar.</div></div></div>
+      </section>
+
+      <section class="page" id="page-calendario">
+        <div class="section-heading page-heading"><div><span class="eyebrow">PLANIFICACIÓN</span><h1>Calendario académico</h1><p>Consulta las fechas de tus tareas y exámenes.</p></div></div>
+        <div class="panel calendar-panel">
+          <div class="calendar-top"><button class="icon-button" id="prevMonth" aria-label="Mes anterior">‹</button><h2 id="calendarMonth">Mes</h2><button class="icon-button" id="nextMonth" aria-label="Mes siguiente">›</button></div>
+          <div class="calendar-grid calendar-weekdays"><span>Lun</span><span>Mar</span><span>Mié</span><span>Jue</span><span>Vie</span><span>Sáb</span><span>Dom</span></div>
+          <div class="calendar-grid" id="calendarDays"></div>
+          <div class="calendar-legend"><span><i class="legend-task"></i> Tarea</span><span><i class="legend-exam"></i> Examen</span></div>
+        </div>
+        <div class="panel selected-day-panel"><div class="panel-heading"><div><h3 id="selectedDateTitle">Actividades del día</h3><p>Selecciona una fecha del calendario.</p></div></div><div id="selectedDayEvents" class="compact-list"><div class="empty-state">Selecciona un día para consultar sus actividades.</div></div></div>
+      </section>
+
+      <section class="page" id="page-examenes">
+        <div class="section-heading page-heading"><div><span class="eyebrow">PREPÁRATE CON TIEMPO</span><h1>Mis exámenes</h1><p>Organiza tus evaluaciones y los temas que debes repasar.</p></div><button class="button button-primary" data-action="add-exam">＋ Nuevo examen</button></div>
+        <div id="examList" class="cards-grid"><div class="empty-state">Todavía no has registrado exámenes.</div></div>
+      </section>
+
+      <section class="page" id="page-proyectos">
+        <div class="section-heading page-heading"><div><span class="eyebrow">TRABAJO Y COLABORACIÓN</span><h1>Proyectos</h1><p>Divide tus trabajos en equipo y sigue su avance.</p></div><button class="button button-primary" data-action="add-project">＋ Nuevo proyecto</button></div>
+        <div id="projectList" class="cards-grid"><div class="empty-state">Aún no tienes proyectos registrados.</div></div>
+      </section>
+
+      <section class="page" id="page-progreso">
+        <div class="section-heading page-heading"><div><span class="eyebrow">CADA PASO IMPORTA</span><h1>Mi progreso</h1><p>Observa cómo avanzas con tus responsabilidades.</p></div></div>
+        <div class="stats-grid">
+          <article class="stat-card"><div class="stat-icon blue">✓</div><div><span>Completadas</span><strong id="progressDone">0</strong><small>Tareas terminadas</small></div></article>
+          <article class="stat-card"><div class="stat-icon amber">◷</div><div><span>Pendientes</span><strong id="progressPending">0</strong><small>Por realizar</small></div></article>
+          <article class="stat-card"><div class="stat-icon teal">%</div><div><span>Porcentaje</span><strong id="progressNumber">0%</strong><small>De cumplimiento</small></div></article>
+        </div>
+        <div class="panel progress-detail"><div class="panel-heading"><div><h3>Resumen de actividades</h3><p>Tu avance general en StudyPlanner.</p></div></div><div class="large-progress"><div class="large-progress-head"><span>Progreso de tareas</span><strong id="largeProgressText">0%</strong></div><div class="progress-track"><i id="largeProgressBar"></i></div></div><p class="muted small" id="progressDetailMessage">Agrega y completa tareas para ver tu progreso.</p></div>
+      </section>
+
+      <section class="page" id="page-enfoque">
+        <div class="section-heading page-heading"><div><span class="eyebrow">TIEMPO PARA CONCENTRARTE</span><h1>Modo enfoque</h1><p>Trabaja en una actividad a la vez y toma descansos.</p></div></div>
+        <div class="focus-wrap"><div class="focus-card panel"><span class="eyebrow">TÉCNICA POMODORO</span><div class="focus-mode"><button class="focus-mode-btn active" data-minutes="25" data-mode="Estudio">Estudio</button><button class="focus-mode-btn" data-minutes="5" data-mode="Descanso corto">Descanso corto</button><button class="focus-mode-btn" data-minutes="15" data-mode="Descanso largo">Descanso largo</button></div><div class="timer" id="timerDisplay">25:00</div><p id="timerMode" class="muted">Tiempo de estudio</p><div class="timer-actions"><button class="button button-primary" id="timerStart">Comenzar</button><button class="button button-soft" id="timerReset">Reiniciar</button></div><p class="focus-tip">Consejo: elige una tarea, elimina distracciones y concéntrate en el siguiente paso.</p></div></div>
+      </section>
+
+      <section class="page" id="page-ajustes">
+        <div class="section-heading page-heading"><div><span class="eyebrow">PERSONALIZA TU ESPACIO</span><h1>Configuración</h1><p>Ajusta StudyPlanner a tu manera.</p></div></div>
+        <div class="panel settings-panel">
+          <div class="setting-row"><div><strong>Nombre del estudiante</strong><p class="muted small">Personaliza el saludo de tu espacio.</p></div><div class="setting-control"><input id="settingsName" type="text" maxlength="40" placeholder="Tu nombre"><button class="button button-primary" id="saveName">Guardar</button></div></div>
+          <div class="setting-row"><div><strong>Apariencia</strong><p class="muted small">Activa el modo oscuro cuando lo prefieras.</p></div><button class="button button-soft" id="settingsTheme">Cambiar tema</button></div>
+          <div class="setting-row"><div><strong>Respaldo de información</strong><p class="muted small">Descarga una copia de tus tareas, exámenes y proyectos.</p></div><button class="button button-soft" id="exportData">Descargar respaldo</button></div>
+          <div class="setting-row"><div><strong>Restaurar datos</strong><p class="muted small">Importa un respaldo previamente descargado.</p></div><label class="button button-soft file-label">Importar respaldo<input id="importData" type="file" accept="application/json" hidden></label></div>
+          <div class="setting-row danger-row"><div><strong>Eliminar todos los datos</strong><p class="muted small">Esta acción no se puede deshacer.</p></div><button class="button button-danger" id="clearData">Borrar mis datos</button></div>
+          <p class="muted tiny">StudyPlanner guarda tus datos localmente en este dispositivo. No hay cuenta ni sincronización automática entre dispositivos en esta versión.</p>
+        </div>
+      </section>
+
+      <footer class="footer"><span>StudyPlanner</span><span>Organiza tu presente, construye tu futuro.</span></footer>
+    </main>
+  </div>
+
+  <nav class="mobile-nav" aria-label="Navegación móvil">
+    <button class="mobile-nav-link active" data-page="inicio"><span>⌂</span><small>Inicio</small></button>
+    <button class="mobile-nav-link" data-page="tareas"><span>✓</span><small>Tareas</small></button>
+    <button class="mobile-nav-link" data-page="calendario"><span>▦</span><small>Agenda</small></button>
+    <button class="mobile-nav-link" data-page="examenes"><span>▤</span><small>Exámenes</small></button>
+    <button class="mobile-nav-link" data-page="ajustes"><span>•••</span><small>Más</small></button>
+  </nav>
+
+  <div class="modal-backdrop" id="modalBackdrop" aria-hidden="true">
+    <section class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <div class="modal-heading"><div><span class="eyebrow">STUDYPLANNER</span><h2 id="modalTitle">Nueva actividad</h2></div><button class="icon-button" id="modalClose" aria-label="Cerrar">×</button></div>
+      <form id="itemForm">
+        <div id="formFields"></div>
+        <div class="modal-actions"><button type="button" class="button button-soft" id="modalCancel">Cancelar</button><button type="submit" class="button button-primary">Guardar</button></div>
+      </form>
+    </section>
+  </div>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <script src="script.js"></script>
+</body>
+</html>
